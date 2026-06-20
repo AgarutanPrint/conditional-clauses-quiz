@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conditional Clauses Quiz – Agarutan Print</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #e8f4f8 0%, #f0e8ff 100%);
+    min-height: 100vh;
+    padding: 16px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(80,60,140,0.13);
+    max-width: 480px;
+    width: 100%;
+    padding: 28px 22px 24px;
+    margin: 0 auto;
+  }
+
+  /* ── MENU ── */
+  .menu-header {
+    text-align: center;
+    margin-bottom: 22px;
+  }
+  .menu-header .brand {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #9b7ebd;
+    margin-bottom: 6px;
+  }
+  .menu-header h1 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #2d1b69;
+    line-height: 1.25;
+    margin-bottom: 4px;
+  }
+  .menu-header p {
+    font-size: 13px;
+    color: #777;
+  }
+  .menu-emoji { font-size: 36px; margin-bottom: 8px; display: block; }
+
+  .section-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    background: linear-gradient(90deg, #6c3fc5 0%, #9b59d0 100%);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 10px;
+    text-align: left;
+    transition: opacity 0.18s, transform 0.14s;
+  }
+  .section-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+  .section-btn .sec-icon { font-size: 22px; flex-shrink: 0; }
+  .section-btn .sec-title { flex: 1; }
+  .section-btn .sec-count { font-size: 11px; font-weight: 400; opacity: 0.82; }
+
+  /* section color variants */
+  .s0 { background: linear-gradient(90deg,#27ae60,#2ecc71); }
+  .s1 { background: linear-gradient(90deg,#2980b9,#3498db); }
+  .s2 { background: linear-gradient(90deg,#8e44ad,#9b59b6); }
+  .s3 { background: linear-gradient(90deg,#c0392b,#e74c3c); }
+  .s4 { background: linear-gradient(90deg,#d35400,#e67e22); }
+  .s5 { background: linear-gradient(90deg,#16a085,#1abc9c); }
+
+  /* ── QUIZ ── */
+  .quiz-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .exit-btn {
+    background: #f0e8ff;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #6c3fc5;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .exit-btn:hover { background: #e0d0ff; }
+  .section-label {
+    font-size: 12px;
+    font-weight: 800;
+    color: #fff;
+    background: #6c3fc5;
+    border-radius: 6px;
+    padding: 3px 9px;
+  }
+  .progress-bar-wrap {
+    background: #ede8fa;
+    border-radius: 99px;
+    height: 7px;
+    flex: 1;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg,#6c3fc5,#9b59d0);
+    border-radius: 99px;
+    transition: width 0.35s;
+  }
+
+  .q-counter {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 4px;
+  }
+  .q-text {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 16px;
+    line-height: 1.45;
+  }
+
+  /* hint */
+  .hint-row {
+    margin-bottom: 12px;
+  }
+  .hint-btn {
+    background: #fff8e1;
+    border: 2px solid #f39c12;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #b7770d;
+    cursor: pointer;
+  }
+  .hint-btn:disabled { opacity: 0.45; cursor: default; }
+  .hint-text {
+    margin-top: 8px;
+    background: #fff8e1;
+    border-left: 3px solid #f39c12;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #7d5a00;
+    display: none;
+  }
+  .hint-text.visible { display: block; }
+
+  /* options */
+  .options { display: flex; flex-direction: column; gap: 9px; margin-bottom: 16px; }
+  .opt-btn {
+    background: #f8f5ff;
+    border: 2px solid #ddd6f8;
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d1b69;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .opt-btn:hover:not(:disabled) { background: #ede8fa; border-color: #9b7ebd; }
+  .opt-btn.correct { background: #e8faf0; border-color: #27ae60; color: #196f3d; }
+  .opt-btn.wrong   { background: #fdecea; border-color: #e74c3c; color: #922b21; }
+  .opt-btn:disabled { cursor: default; }
+
+  .feedback {
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.ok  { background: #e8faf0; color: #196f3d; }
+  .feedback.bad { background: #fdecea; color: #922b21; }
+
+  .next-btn {
+    width: 100%;
+    background: linear-gradient(90deg,#6c3fc5,#9b59d0);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 13px;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    display: none;
+  }
+  .next-btn.show { display: block; }
+  .next-btn:hover { opacity: 0.9; }
+
+  /* stats bar */
+  .stats-bar {
+    display: flex;
+    gap: 8px;
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid #ede8fa;
+  }
+  .stat-pill {
+    flex: 1;
+    background: #f8f5ff;
+    border-radius: 8px;
+    padding: 7px 4px;
+    text-align: center;
+  }
+  .stat-pill .val { font-size: 16px; font-weight: 800; color: #2d1b69; }
+  .stat-pill .lbl { font-size: 10px; color: #999; }
+
+  /* ── END SCREEN ── */
+  .end-screen { text-align: center; }
+  .end-emoji { font-size: 52px; margin-bottom: 10px; }
+  .end-title { font-size: 22px; font-weight: 800; color: #2d1b69; margin-bottom: 6px; }
+  .end-tier  { font-size: 16px; font-weight: 700; color: #6c3fc5; margin-bottom: 18px; }
+
+  .stars-row { display: flex; justify-content: center; gap: 6px; margin-bottom: 18px; }
+  .star {
+    font-size: 30px;
+    opacity: 0;
+    transform: scale(0.3);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .star.pop { opacity: 1; transform: scale(1); }
+
+  .score-pills { display: flex; gap: 8px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
+  .score-pill {
+    background: #f8f5ff;
+    border-radius: 10px;
+    padding: 10px 14px;
+    min-width: 70px;
+  }
+  .score-pill .sp-val { font-size: 20px; font-weight: 800; color: #2d1b69; }
+  .score-pill .sp-lbl { font-size: 11px; color: #999; }
+
+  .end-btns { display: flex; gap: 10px; justify-content: center; margin-bottom: 18px; }
+  .end-btn {
+    border: none; border-radius: 10px; padding: 12px 20px;
+    font-size: 14px; font-weight: 700; cursor: pointer;
+  }
+  .btn-retry { background: linear-gradient(90deg,#6c3fc5,#9b59d0); color: #fff; }
+  .btn-menu  { background: #f0e8ff; color: #6c3fc5; }
+  .btn-retry:hover { opacity: 0.9; }
+  .btn-menu:hover  { background: #e0d0ff; }
+
+  /* review box */
+  .review-box {
+    background: #f8f5ff;
+    border: 2px solid #ddd6f8;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 18px;
+    text-align: left;
+    display: none;
+  }
+  .review-badge {
+    display: inline-block;
+    background: #6c3fc5;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 5px;
+    padding: 3px 8px;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+  .review-heading { font-size: 14px; font-weight: 800; color: #2d1b69; margin-bottom: 6px; }
+  .review-body    { font-size: 12px; color: #555; line-height: 1.5; margin-bottom: 12px; }
+  .review-btn {
+    display: block;
+    background: linear-gradient(90deg,#6c3fc5,#9b59d0);
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .review-btn:hover { opacity: 0.9; }
+
+  /* wrong review list */
+  .wrong-review { text-align: left; margin-top: 8px; }
+  .wrong-review h3 { font-size: 13px; font-weight: 800; color: #922b21; margin-bottom: 10px; }
+  .wrong-item {
+    background: #fdecea;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+    font-size: 12px;
+  }
+  .wrong-item .wi-q { font-weight: 700; color: #1a1a2e; margin-bottom: 3px; }
+  .wrong-item .wi-correct { color: #196f3d; font-weight: 700; }
+  .wrong-item .wi-yours   { color: #922b21; }
+
+  /* encourage screen */
+  .encourage-msg {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+</style>
+</head>
+<body>
+<div class="card" id="app"></div>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────────────────────
+const SECTIONS = [
+  {
+    id: 0,
+    title: "Zero Conditional",
+    subtitle: "General truths & scientific facts",
+    icon: "🌡️",
+    colorClass: "s0",
+    questions: [
+      {
+        q: "Which structure correctly describes the Zero Conditional?",
+        options: ["If + past simple, would + base verb","If + present simple, present simple","If + present simple, will + base verb","If + past perfect, would have + past participle"],
+        answer: 1,
+        hint: "Zero Conditional uses the same tense in both clauses — no 'will' or 'would'."
+      },
+      {
+        q: "Complete the sentence: 'If you heat water to 100°C, it ___.'",
+        options: ["boiled","will boil","boils","would boil"],
+        answer: 2,
+        hint: "Zero Conditional: present simple in both clauses."
+      },
+      {
+        q: "Which sentence is a correct Zero Conditional?",
+        options: ["If you will freeze water, it turns into ice.","If you freeze water, it turns into ice.","If you froze water, it would turn into ice.","If you had frozen water, it would have turned into ice."],
+        answer: 1,
+        hint: "Both clauses use present simple in the Zero Conditional."
+      },
+      {
+        q: "Zero Conditional is used for:",
+        options: ["Unreal past situations","Hypothetical future plans","General truths and scientific facts","Real likely future events"],
+        answer: 2,
+        hint: "Think about facts that are ALWAYS true — like laws of nature."
+      },
+      {
+        q: "Choose the correct sentence: 'If plants ___ enough sunlight, they die.'",
+        options: ["won't get","didn't get","don't get","hadn't gotten"],
+        answer: 2,
+        hint: "Zero Conditional uses negative present simple: 'don't' or 'doesn't'."
+      },
+      {
+        q: "Rewrite this sentence keeping the same meaning: 'If you mix blue and yellow, you get green.' Which is correct?",
+        options: ["You will get green if you mix blue and yellow.","You get green if you mix blue and yellow.","You would get green if you mixed blue and yellow.","You got green if you mixed blue and yellow."],
+        answer: 1,
+        hint: "In the Zero Conditional, swapping clause order doesn't change the tense."
+      },
+      {
+        q: "Which modal is NOT typically used in the Zero Conditional?",
+        options: ["can","may","would","might"],
+        answer: 2,
+        hint: "'Would' belongs to Second Conditional hypothetical results, not Zero Conditional."
+      },
+      {
+        q: "'If you touch fire, you ___ burned.' Complete with Zero Conditional.",
+        options: ["will get","would get","get","would have gotten"],
+        answer: 2,
+        hint: "Zero Conditional: present simple in the result clause."
+      },
+      {
+        q: "Which example is a Zero Conditional about a habit or routine?",
+        options: ["If I had more time, I would exercise.","If I wake up late, I miss the bus.","If it rains tomorrow, I will stay home.","If I had studied, I would have passed."],
+        answer: 1,
+        hint: "Habits that ALWAYS happen under certain conditions use Zero Conditional."
+      },
+      {
+        q: "Does the Zero Conditional use modals like 'will' or 'would' in the result clause?",
+        options: ["Yes, always","Yes, sometimes","No, never — only present simple","Only when expressing ability"],
+        answer: 2,
+        hint: "Zero Conditional only uses present simple in both the if-clause and result clause."
+      },
+      {
+        q: "Choose the sentence where the comma is used correctly in a Zero Conditional.",
+        options: ["You get purple, if you mix red and blue.","If you mix red and blue you get purple.","If you mix red and blue, you get purple.","You get purple if, you mix red and blue."],
+        answer: 2,
+        hint: "Use a comma when the if-clause comes FIRST."
+      },
+      {
+        q: "'If you ___ an egg, it becomes solid.' Choose the correct verb.",
+        options: ["will boil","boil","boiled","had boiled"],
+        answer: 1,
+        hint: "Zero Conditional: if + present simple."
+      }
+    ]
+  },
+  {
+    id: 1,
+    title: "First Conditional",
+    subtitle: "Real & likely future situations",
+    icon: "🌦️",
+    colorClass: "s1",
+    questions: [
+      {
+        q: "What is the structure of the First Conditional?",
+        options: ["If + past simple, would + base verb","If + present simple, will + base verb","If + past perfect, would have + past participle","If + present simple, present simple"],
+        answer: 1,
+        hint: "First Conditional talks about REAL future possibilities — uses 'will'."
+      },
+      {
+        q: "Complete: 'If it ___ tomorrow, we will cancel the picnic.'",
+        options: ["will rain","rains","rained","had rained"],
+        answer: 1,
+        hint: "In the if-clause, use present simple (not 'will rain')."
+      },
+      {
+        q: "Which sentence is a correct First Conditional?",
+        options: ["If she studies hard, she will pass the exam.","If she studied hard, she would pass the exam.","If she had studied hard, she would have passed.","If she studies hard, she passes the exam."],
+        answer: 0,
+        hint: "First Conditional: if + present simple, will + base verb."
+      },
+      {
+        q: "The First Conditional is used to express:",
+        options: ["Unreal or impossible present situations","Real or likely future outcomes","General facts that are always true","Unreal past situations and regrets"],
+        answer: 1,
+        hint: "Think about things that CAN and WILL probably happen."
+      },
+      {
+        q: "Choose the correct sentence: 'If you don't hurry, you ___ the bus.'",
+        options: ["would miss","miss","will miss","had missed"],
+        answer: 2,
+        hint: "First Conditional result clause: will + base verb."
+      },
+      {
+        q: "Rewrite keeping the same meaning: 'If it rains, I will stay home.'",
+        options: ["I will stay home if it rains.","I stayed home if it rained.","I would stay home if it rained.","I stay home if it rains."],
+        answer: 0,
+        hint: "Swap clause order, remove comma, keep the same tenses."
+      },
+      {
+        q: "'If you ___ (not eat) breakfast, you will feel hungry.' Choose the correct form.",
+        options: ["won't eat","don't eat","didn't eat","hadn't eaten"],
+        answer: 1,
+        hint: "Negative if-clause in First Conditional: don't / doesn't."
+      },
+      {
+        q: "Which modal can replace 'will' in a First Conditional to show possibility?",
+        options: ["would","could have","might","should have"],
+        answer: 2,
+        hint: "'Might' expresses possibility in the First Conditional result clause."
+      },
+      {
+        q: "'If she ___ the invitation, she will come to the party.' Choose correctly.",
+        options: ["accepts","accepted","had accepted","would accept"],
+        answer: 0,
+        hint: "Present simple in the if-clause of First Conditional."
+      },
+      {
+        q: "Which sentence uses First Conditional INCORRECTLY?",
+        options: ["If we don't leave now, we will be late.","If he saves money, he will buy a car.","If I will study, I will pass.","If she doesn't hurry, she will miss the bus."],
+        answer: 2,
+        hint: "Never use 'will' in the if-clause of a conditional."
+      },
+      {
+        q: "Complete: 'If they ___ the project on time, they will get a bonus.'",
+        options: ["complete","will complete","completed","had completed"],
+        answer: 0,
+        hint: "If-clause in First Conditional uses present simple."
+      },
+      {
+        q: "Which best describes what First Conditional expresses?",
+        options: ["Something that happened in the past","Something impossible in the present","Something real and possible in the future","A regret about the past"],
+        answer: 2,
+        hint: "First Conditional = real possibility; the condition CAN be met."
+      }
+    ]
+  },
+  {
+    id: 2,
+    title: "Second Conditional",
+    subtitle: "Hypothetical & unlikely situations",
+    icon: "💭",
+    colorClass: "s2",
+    questions: [
+      {
+        q: "What is the structure of the Second Conditional?",
+        options: ["If + present simple, will + base verb","If + past perfect, would have + past participle","If + past simple, would + base verb","If + present simple, present simple"],
+        answer: 2,
+        hint: "Second Conditional: if + PAST simple, WOULD + base verb."
+      },
+      {
+        q: "Complete: 'If I ___ rich, I would travel the world.'",
+        options: ["am","will be","were","had been"],
+        answer: 2,
+        hint: "In Second Conditional if-clauses, use 'were' for all subjects — not 'was'."
+      },
+      {
+        q: "Which sentence is a correct Second Conditional?",
+        options: ["If I am rich, I will travel the world.","If I were rich, I would travel the world.","If I had been rich, I would have traveled the world.","If I were rich, I will travel the world."],
+        answer: 1,
+        hint: "Second Conditional: past simple in if-clause, would + base verb in result."
+      },
+      {
+        q: "The Second Conditional is used to talk about:",
+        options: ["Real, likely future events","General truths and habits","Unreal or hypothetical present/future situations","Unreal past events"],
+        answer: 2,
+        hint: "Second Conditional = IMAGINARY situations — unlikely or impossible."
+      },
+      {
+        q: "'If she ___ harder, she would pass the exam.' (Second Conditional)",
+        options: ["studies","will study","studied","had studied"],
+        answer: 2,
+        hint: "Past simple in the if-clause of Second Conditional."
+      },
+      {
+        q: "In the Second Conditional, which form is correct for the verb 'be'?",
+        options: ["If I was rich…","If I were rich…","If I am rich…","If I had been rich…"],
+        answer: 1,
+        hint: "Grammar rule: use 'were' (not 'was') for all subjects in Second Conditional."
+      },
+      {
+        q: "Rewrite keeping meaning: 'If I were rich, I would buy a house.'",
+        options: ["I would buy a house if I were rich.","I will buy a house if I am rich.","I would have bought a house if I had been rich.","I buy a house if I am rich."],
+        answer: 0,
+        hint: "Swap clause positions, remove comma, keep same tenses."
+      },
+      {
+        q: "Which modal can replace 'would' in Second Conditional to show possibility?",
+        options: ["will","can","might","must"],
+        answer: 2,
+        hint: "'Might' or 'could' can replace 'would' to add uncertainty."
+      },
+      {
+        q: "'If they ___ us, we would go to the party.' Choose the correct form.",
+        options: ["invite","invited","had invited","will invite"],
+        answer: 1,
+        hint: "Past simple in Second Conditional if-clause."
+      },
+      {
+        q: "What is the difference between First and Second Conditional?",
+        options: ["First is about the past; Second about the future","First is about real/likely situations; Second is about unreal/unlikely ones","First uses 'would'; Second uses 'will'","There is no difference"],
+        answer: 1,
+        hint: "'If I study, I will pass' (real) vs 'If I studied, I would pass' (hypothetical)."
+      },
+      {
+        q: "'If I ___ a million dollars, I would donate to charity.' (Second Conditional)",
+        options: ["have","had","will have","would have"],
+        answer: 1,
+        hint: "Past simple 'had' — not 'would have' — in the if-clause."
+      },
+      {
+        q: "Which sentence uses Second Conditional INCORRECTLY?",
+        options: ["If he knew the answer, he would tell you.","If we had more time, we would visit Paris.","If I were you, I would apologize.","If she would study, she would pass."],
+        answer: 3,
+        hint: "Don't use 'would' in the if-clause. Use past simple instead."
+      }
+    ]
+  },
+  {
+    id: 3,
+    title: "Third Conditional",
+    subtitle: "Unreal past situations & regrets",
+    icon: "⏮️",
+    colorClass: "s3",
+    questions: [
+      {
+        q: "What is the structure of the Third Conditional?",
+        options: ["If + past simple, would + base verb","If + present simple, will + base verb","If + past perfect, would have + past participle","If + past simple, would have + past participle"],
+        answer: 2,
+        hint: "Third Conditional: had + past participle → would HAVE + past participle."
+      },
+      {
+        q: "Complete: 'If I ___ about the meeting, I would have attended.'",
+        options: ["knew","had known","know","would have known"],
+        answer: 1,
+        hint: "Third Conditional if-clause: had + past participle (past perfect)."
+      },
+      {
+        q: "Which sentence is a correct Third Conditional?",
+        options: ["If she studied harder, she would pass.","If she had studied harder, she would have passed.","If she studies harder, she will pass.","If she were to study harder, she would pass."],
+        answer: 1,
+        hint: "Third Conditional: if + past perfect, would have + past participle."
+      },
+      {
+        q: "The Third Conditional expresses:",
+        options: ["Real future possibilities","General scientific truths","Unreal past situations and missed opportunities","Hypothetical present situations"],
+        answer: 2,
+        hint: "Third Conditional = things that did NOT happen in the past."
+      },
+      {
+        q: "'If you ___ your umbrella, you wouldn't have gotten wet.'",
+        options: ["didn't forget","wouldn't have forgotten","hadn't forgotten","don't forget"],
+        answer: 2,
+        hint: "Negative Third Conditional if-clause: hadn't + past participle."
+      },
+      {
+        q: "Rewrite: 'If we had left earlier, we would have caught the train.'",
+        options: ["We would have caught the train if we had left earlier.","We would catch the train if we left earlier.","We will catch the train if we leave earlier.","We caught the train if we had left earlier."],
+        answer: 0,
+        hint: "Swap clause order, same tenses, remove comma."
+      },
+      {
+        q: "Which modal can replace 'would have' in the Third Conditional?",
+        options: ["will","could have","would","can"],
+        answer: 1,
+        hint: "'Could have' or 'might have' can replace 'would have' in the result clause."
+      },
+      {
+        q: "'If she ___ harder, she would have passed the exam.'",
+        options: ["studied","studies","had studied","would study"],
+        answer: 2,
+        hint: "Past perfect (had + past participle) in the if-clause."
+      },
+      {
+        q: "Which sentence is Third Conditional?",
+        options: ["If I save money, I will buy a car.","If I saved money, I would buy a car.","If I had saved money, I would have bought a car.","If I had money, I would buy a car."],
+        answer: 2,
+        hint: "Look for 'had + past participle' in the if-clause."
+      },
+      {
+        q: "'If he ___ the bus, he would have arrived on time.'",
+        options: ["didn't miss","hasn't missed","hadn't missed","wouldn't miss"],
+        answer: 2,
+        hint: "Negative: hadn't + past participle (past perfect negative)."
+      },
+      {
+        q: "'If you had told me the truth, I ___ so upset.'",
+        options: ["wouldn't be","won't have been","wouldn't have been","wasn't"],
+        answer: 2,
+        hint: "Third Conditional result: wouldn't have + past participle."
+      },
+      {
+        q: "What does the Third Conditional often express emotionally?",
+        options: ["Excitement about the future","Regret or missed opportunities","Scientific facts","Permission"],
+        answer: 1,
+        hint: "Third Conditional is often used for things we WISH had been different."
+      }
+    ]
+  },
+  {
+    id: 4,
+    title: "Mixed Conditionals",
+    subtitle: "Combining time frames",
+    icon: "🔀",
+    colorClass: "s4",
+    questions: [
+      {
+        q: "What do Mixed Conditionals combine?",
+        options: ["Zero and First Conditional","Different time frames from Second and Third Conditionals","Two First Conditionals","First and Zero Conditionals"],
+        answer: 1,
+        hint: "Mixed Conditionals blend past and present/future conditions and results."
+      },
+      {
+        q: "Which structure describes a Past Condition with a Present Result (Mixed Conditional)?",
+        options: ["If + past simple, would + base verb","If + past perfect, would + base verb","If + present simple, will + base verb","If + past simple, would have + past participle"],
+        answer: 1,
+        hint: "Past condition (had done) → present result (would be/do)."
+      },
+      {
+        q: "Which structure describes a Present Condition with a Past Result?",
+        options: ["If + past perfect, would + base verb","If + present simple, will + base verb","If + past simple, would have + past participle","If + past perfect, would have + past participle"],
+        answer: 2,
+        hint: "Present condition (were/lived) → past result (would have done)."
+      },
+      {
+        q: "'If I had studied harder, I ___ smarter now.' Complete correctly.",
+        options: ["would have been","will be","would be","was"],
+        answer: 2,
+        hint: "Past condition → present result: would + base verb (not 'would have')."
+      },
+      {
+        q: "'If I ___ taller, I would have played basketball.' Choose correctly.",
+        options: ["had been","were","am","was"],
+        answer: 1,
+        hint: "Present condition in Mixed Conditional uses past simple: 'were'."
+      },
+      {
+        q: "Which sentence is a Mixed Conditional (past condition → present result)?",
+        options: ["If she studies hard, she will pass.","If she had taken that job, she would be living in New York now.","If she studied harder, she would pass.","If she had studied harder, she would have passed."],
+        answer: 1,
+        hint: "Look for 'had taken' (past perfect) paired with 'would be' (present result)."
+      },
+      {
+        q: "Which sentence is a Mixed Conditional (present condition → past result)?",
+        options: ["If I were more confident, I would have asked for a promotion.","If I had saved money, I would be rich now.","If it rains, I will stay home.","If she had studied, she would have passed."],
+        answer: 0,
+        hint: "Present condition: 'were more confident' + past result: 'would have asked'."
+      },
+      {
+        q: "'If I ___ my phone, I would have called you yesterday.'",
+        options: ["didn't lose","wouldn't have lost","hadn't lost","don't lose"],
+        answer: 2,
+        hint: "Past condition in Mixed Conditional: hadn't + past participle."
+      },
+      {
+        q: "Which is INCORRECT in a Mixed Conditional?",
+        options: ["If I had studied harder, I would be smarter now.","If I were taller, I would have played basketball.","If I had studied harder, I would have been smarter now.","If she had taken the job, she would be in New York now."],
+        answer: 2,
+        hint: "Past condition → present result should use 'would be', not 'would have been'."
+      },
+      {
+        q: "'If they ___ to another city, they would still be living here.'",
+        options: ["didn't move","hadn't moved","wouldn't move","don't move"],
+        answer: 1,
+        hint: "Past condition (hadn't moved) leads to a present result."
+      },
+      {
+        q: "'If I ___ more money, I could buy a car now.' (past condition → present result)",
+        options: ["save","saved","had saved","would have saved"],
+        answer: 2,
+        hint: "Past perfect 'had saved' — the condition is in the past, the result is now."
+      },
+      {
+        q: "What's the key difference between Third Conditional and Mixed Conditional (past→present)?",
+        options: ["There is no difference","Third Conditional has a past result; Mixed Conditional has a present result","Third Conditional uses 'will'; Mixed uses 'would'","Mixed Conditional uses present simple"],
+        answer: 1,
+        hint: "Third: 'would HAVE done' (past result) vs Mixed: 'would do/be' (present result)."
+      }
+    ]
+  },
+  {
+    id: 5,
+    title: "Conditionals with Modals",
+    subtitle: "can, could, might, may, should, would, must",
+    icon: "⚙️",
+    colorClass: "s5",
+    questions: [
+      {
+        q: "Which modal expresses ability or permission in a conditional?",
+        options: ["must","should","can/could","will"],
+        answer: 2,
+        hint: "'Can' and 'could' both express ability and permission in conditionals."
+      },
+      {
+        q: "'If you study hard, you ___ pass the exam.' (possibility, not certainty)",
+        options: ["must","might","will definitely","had to"],
+        answer: 1,
+        hint: "'Might' expresses possibility without certainty — less sure than 'will'."
+      },
+      {
+        q: "'If I were you, I ___ apologize to her.' Which modal gives advice?",
+        options: ["might","could","would/should","must"],
+        answer: 2,
+        hint: "'Would' or 'should' both express advice in Second Conditional."
+      },
+      {
+        q: "'If you don't eat breakfast, you ___ feel tired.' Choose the best modal.",
+        options: ["must","might","should have","could have"],
+        answer: 1,
+        hint: "'Might' expresses the real possibility in a First Conditional."
+      },
+      {
+        q: "'If I had known about the meeting, I ___ attended.' Which is correct?",
+        options: ["would have","could have","might have","All of the above"],
+        answer: 3,
+        hint: "In Third Conditional, 'would have', 'could have', and 'might have' are all possible."
+      },
+      {
+        q: "Which sentence uses a modal INCORRECTLY in a conditional?",
+        options: ["If you don't hurry, you might miss the bus.","If I were rich, I could travel the world.","If you could might go, let me know.","If she had studied, she might have passed."],
+        answer: 2,
+        hint: "Never use two modals together — 'could might' is always wrong."
+      },
+      {
+        q: "'If she had studied harder, she ___ have passed the exam.' (less certain than 'would')",
+        options: ["might","must","will","should"],
+        answer: 0,
+        hint: "'Might have' = less certainty than 'would have' in Third Conditional."
+      },
+      {
+        q: "Modals are most commonly used in which part of a conditional sentence?",
+        options: ["The if-clause only","The main clause (result clause)","Both equally","Neither"],
+        answer: 1,
+        hint: "Modals usually appear in the result/main clause, not the if-clause."
+      },
+      {
+        q: "'If you ___ need help, let me know.' Which modal is used in the if-clause to show uncertainty?",
+        options: ["might","should","could","must"],
+        answer: 1,
+        hint: "'Should' in the if-clause is used to express uncertainty or formality."
+      },
+      {
+        q: "'If I had saved more money, I ___ buy a car now.' (Mixed Conditional, ability)",
+        options: ["would","will","could","must"],
+        answer: 2,
+        hint: "'Could' expresses ability/possibility in the present result of a Mixed Conditional."
+      },
+      {
+        q: "'If you don't lock the door, someone ___ break in.' Which modal fits?",
+        options: ["must","might","would","should"],
+        answer: 1,
+        hint: "'Might' expresses real possibility in First Conditional."
+      },
+      {
+        q: "Which modal expresses necessity or strong obligation in a conditional?",
+        options: ["might","could","would","must"],
+        answer: 3,
+        hint: "'Must' = strong necessity. 'You must wear a seatbelt if you drive.'"
+      },
+      {
+        q: "'If they had left earlier, they ___ have caught the train.' Which modal fits for advice?",
+        options: ["might","could","should","would"],
+        answer: 2,
+        hint: "'Should have' in Third Conditional implies advice or expectation in hindsight."
+      }
+    ]
+  }
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let currentSection = null;
+let questions = [];
+let qIndex = 0;
+let points = 0;
+let correct = 0;
+let wrong = 0;
+let hintUsed = false;
+let answered = false;
+let selectedAnswer = null;
+let wrongItems = [];
+
+// ─── HELPERS ─────────────────────────────────────────────────────────────────
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function prepareQuestions(section) {
+  return shuffle(section.questions).map(q => {
+    const correctText = q.options[q.answer];
+    const shuffled = shuffle(q.options);
+    return {
+      q: q.q,
+      hint: q.hint,
+      options: shuffled,
+      answer: shuffled.indexOf(correctText),
+      correctText
+    };
+  });
+}
+
+// ─── RENDER ──────────────────────────────────────────────────────────────────
+const app = document.getElementById('app');
+
+function renderMenu() {
+  app.innerHTML = `
+    <div class="menu-header">
+      <span class="menu-emoji">📘</span>
+      <div class="brand">Agarutan Print</div>
+      <h1>Conditional Clauses Quiz</h1>
+      <p>Choose a section to begin</p>
+    </div>
+    ${SECTIONS.map((s,i) => `
+      <button class="section-btn ${s.colorClass}" onclick="startSection(${i})">
+        <span class="sec-icon">${s.icon}</span>
+        <span class="sec-title">
+          ${s.title}<br>
+          <span class="sec-count">${s.subtitle} · ${s.questions.length} questions</span>
+        </span>
+        <span>▶</span>
+      </button>
+    `).join('')}
+  `;
+}
+
+function startSection(idx) {
+  currentSection = SECTIONS[idx];
+  questions = prepareQuestions(currentSection);
+  qIndex = 0;
+  points = 0;
+  correct = 0;
+  wrong = 0;
+  wrongItems = [];
+  renderQuestion();
+}
+
+function renderQuestion() {
+  hintUsed = false;
+  answered = false;
+  selectedAnswer = null;
+  const q = questions[qIndex];
+  const pct = (qIndex / questions.length) * 100;
+
+  app.innerHTML = `
+    <div class="quiz-header">
+      <button class="exit-btn" onclick="renderMenu()">✕ Exit</button>
+      <span class="section-label">${currentSection.icon} ${currentSection.title}</span>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" style="width:${pct}%"></div>
+      </div>
+    </div>
+
+    <div class="q-counter">Question ${qIndex + 1} of ${questions.length}</div>
+    <div class="q-text">${q.q}</div>
+
+    <div class="hint-row">
+      <button class="hint-btn" id="hintBtn" onclick="showHint()">💡 Hint (−5 pts)</button>
+      <div class="hint-text" id="hintBox">${q.hint}</div>
+    </div>
+
+    <div class="options" id="opts">
+      ${q.options.map((opt, i) => `
+        <button class="opt-btn" id="opt${i}" onclick="selectAnswer(${i})">${opt}</button>
+      `).join('')}
+    </div>
+
+    <div class="feedback" id="feedback"></div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+      ${qIndex + 1 < questions.length ? 'Next Question →' : 'See Results 🎉'}
+    </button>
+
+    <div class="stats-bar">
+      <div class="stat-pill"><div class="val">${points}</div><div class="lbl">Points</div></div>
+      <div class="stat-pill"><div class="val">✅ ${correct}</div><div class="lbl">Correct</div></div>
+      <div class="stat-pill"><div class="val">❌ ${wrong}</div><div class="lbl">Wrong</div></div>
+    </div>
+  `;
+}
+
+function showHint() {
+  if (hintUsed || answered) return;
+  hintUsed = true;
+  document.getElementById('hintBtn').disabled = true;
+  document.getElementById('hintBox').classList.add('visible');
+}
+
+function selectAnswer(i) {
+  if (answered) return;
+  answered = true;
+  selectedAnswer = i;
+  const q = questions[qIndex];
+  const isCorrect = (i === q.answer);
+
+  // disable all options
+  q.options.forEach((_, idx) => {
+    const btn = document.getElementById(`opt${idx}`);
+    btn.disabled = true;
+    if (idx === q.answer) btn.classList.add('correct');
+    if (idx === i && !isCorrect) btn.classList.add('wrong');
+  });
+
+  const fb = document.getElementById('feedback');
+  fb.classList.add('show');
+
+  if (isCorrect) {
+    const pts = hintUsed ? 5 : 10;
+    points += pts;
+    correct++;
+    fb.classList.add('ok');
+    fb.textContent = hintUsed ? `✅ Correct! +5 points (hint used)` : `✅ Correct! +10 points`;
+  } else {
+    wrong++;
+    fb.classList.add('bad');
+    fb.textContent = `❌ Incorrect. The correct answer is: "${q.correctText}"`;
+    wrongItems.push({ q: q.q, correct: q.correctText, yours: q.options[i] });
+  }
+
+  document.getElementById('nextBtn').classList.add('show');
+}
+
+function nextQuestion() {
+  qIndex++;
+  if (qIndex < questions.length) {
+    renderQuestion();
+  } else {
+    renderEnd();
+  }
+}
+
+function renderEnd() {
+  const total = questions.length;
+  const pct = Math.round((correct / total) * 100);
+  const passed = pct >= 70;
+
+  let tier = '', endTitle = '', endEmoji = '';
+  if (!passed) {
+    endEmoji = '💪';
+    endTitle = 'Keep Practicing!';
+    tier = 'You\'re making progress — review the material and try again!';
+  } else if (pct === 100) {
+    endEmoji = '🏆';
+    endTitle = 'Spectacular!';
+    tier = '🏆 Perfect Score — Outstanding!';
+  } else if (pct >= 85) {
+    endEmoji = '⭐';
+    endTitle = 'Excellent Work!';
+    tier = '⭐ Excellent — Almost Perfect!';
+  } else {
+    endEmoji = '🌟';
+    endTitle = 'Great Job!';
+    tier = '🌟 Great Job — Well Done!';
+  }
+
+  const starsHtml = passed ? `
+    <div class="stars-row">
+      ${[0,1,2,3,4].map(i => `<span class="star" id="star${i}">⭐</span>`).join('')}
+    </div>` : '';
+
+  const wrongReview = (passed && wrongItems.length > 0) ? `
+    <div class="wrong-review">
+      <h3>📝 Review — Questions You Missed:</h3>
+      ${wrongItems.map(w => `
+        <div class="wrong-item">
+          <div class="wi-q">${w.q}</div>
+          <div class="wi-correct">✅ Correct: ${w.correct}</div>
+          <div class="wi-yours">❌ Your answer: ${w.yours}</div>
+        </div>
+      `).join('')}
+    </div>` : '';
+
+  // Review box (shown/hidden via JS based on ?src=)
+  const reviewBox = `
+    <div class="review-box" id="reviewBox" style="display:none">
+      <span class="review-badge">🔒 Notice: For Parents & Educators</span>
+      <div class="review-heading">How did you like this complete resource bundle?</div>
+      <div class="review-body">
+        Thank you for choosing <strong>Agarutan Print</strong>! We hope this
+        combination of printable worksheets, the digital fillable PDF, and the
+        interactive quiz bonus is helping to build your student skills. If this
+        resource bundle added value to your student learning experience, please
+        take a brief moment to share your feedback. Your review helps us continue
+        creating high-quality learning assets!
+      </div>
+      <div id="reviewButtons"></div>
+    </div>`;
+
+  app.innerHTML = `
+    <div class="end-screen">
+      <div class="end-emoji">${endEmoji}</div>
+      <div class="end-title">${endTitle}</div>
+      <div class="end-tier">${tier}</div>
+      ${starsHtml}
+      <div class="score-pills">
+        <div class="score-pill"><div class="sp-val">${points}</div><div class="sp-lbl">Points</div></div>
+        <div class="score-pill"><div class="sp-val">✅ ${correct}</div><div class="sp-lbl">Correct</div></div>
+        <div class="score-pill"><div class="sp-val">❌ ${wrong}</div><div class="sp-lbl">Wrong</div></div>
+        <div class="score-pill"><div class="sp-val">${pct}%</div><div class="sp-lbl">Score</div></div>
+      </div>
+      ${!passed ? `<div class="encourage-msg">Don't give up! Every attempt helps you learn. Review the conditional clauses and give it another try — you've got this! 💪</div>` : ''}
+      <div class="end-btns">
+        <button class="end-btn btn-retry" onclick="startSection(${currentSection.id})">🔄 Try Again</button>
+        <button class="end-btn btn-menu" onclick="renderMenu()">🏠 Menu</button>
+      </div>
+      ${reviewBox}
+      ${wrongReview}
+    </div>
+  `;
+
+  // Animate stars
+  if (passed) {
+    [0,1,2,3,4].forEach((i) => {
+      setTimeout(() => {
+        const el = document.getElementById('star' + i);
+        if (el) el.classList.add('pop');
+      }, 200 + i * 180);
+    });
+  }
+
+  // Smart ?src= review button logic
+  const params = new URLSearchParams(window.location.search);
+  const src = params.get('src');
+  const reviewBox2 = document.getElementById('reviewBox');
+  const reviewButtons = document.getElementById('reviewButtons');
+
+  if (src === 'etsy') {
+    reviewBox2.style.display = 'block';
+    reviewButtons.innerHTML = `
+      <a href="https://www.etsy.com/your/purchases" target="_blank" class="review-btn">
+        ⭐ Review This Resource Bundle
+      </a>`;
+  } else if (src === 'amazon') {
+    reviewBox2.style.display = 'block';
+    reviewButtons.innerHTML = `
+      <a href="https://www.amazon.com/review/product/B0F1TY4GX5" target="_blank" class="review-btn">
+        ⭐ Review Paperback on Amazon
+      </a>
+      <a href="https://www.amazon.com/review/product/B0F6CXWTG8" target="_blank" class="review-btn" style="margin-top:8px;display:block">
+        ⭐ Review Hardcover on Amazon
+      </a>`;
+  } else {
+    reviewBox2.style.display = 'none';
+  }
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+renderMenu();
+</script>
+</body>
+</html>
