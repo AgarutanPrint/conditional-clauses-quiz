@@ -766,7 +766,7 @@ const SECTIONS = [
       },
       {
         q: "'If I had known about the meeting, I ___ attended.' Which is correct?",
-        options: ["would have","could have","might have","All of the above"],
+        options: ["would have","could have","might have","All of them"],
         answer: 3,
         hint: "In Third Conditional, 'would have', 'could have', and 'might have' are all possible."
       },
@@ -1086,13 +1086,15 @@ function renderEnd() {
   const reviewBox2 = document.getElementById('reviewBox');
   const reviewButtons = document.getElementById('reviewButtons');
 
-  if (allSectionsDone && src === 'etsy') {
+  const isLastSection = currentSection.id === SECTIONS.length - 1;
+
+  if (isLastSection && passed && src === 'etsy') {
     reviewBox2.style.display = 'block';
     reviewButtons.innerHTML = `
       <a href="https://www.etsy.com/your/purchases" target="_blank" class="review-btn">
         ⭐ Review This Resource Bundle
       </a>`;
-  } else if (allSectionsDone && src === 'amazon') {
+  } else if (isLastSection && passed && src === 'amazon') {
     reviewBox2.style.display = 'block';
     reviewButtons.innerHTML = `
       <a href="https://www.amazon.com/review/create-review?asin=B0F1TY4GX5" target="_blank" class="review-btn">
